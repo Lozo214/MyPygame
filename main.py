@@ -1,55 +1,11 @@
 import pygame
 import os # Using this to help define path to images
-
-pygame.init()
-pygame.font.init() # Initializes pygame font librarys
-pygame.mixer.init() # Initializes pygame sound effect library
-
-# Window settings
-WIDTH, HEIGHT = 900, 500
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Space Shooters")
-BORDER = pygame.Rect(WIDTH//2 - 5, 0, 10, HEIGHT)
-
-# Fonts
-HEALTH_FONT = pygame.font.SysFont('arial', 40)
-WINNER_FONT = pygame.font.SysFont('arial', 100)
-
-# Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-YELLOW = (255, 255, 0)
-
-# Sound effects
-BULLET_HIT_SOUND = pygame.mixer.Sound(os.path.join('Assets', 'Grenade+1.mp3'))
-BULLET_FIRE_SOUND = pygame.mixer.Sound(os.path.join('Assets', 'Gun+Silencer.mp3'))
-
-# Game settings
-FPS = 60
-VEL = 5 # Velocity
-BULLET_VEL = 7
-
-# Spaceship settinsg
-SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55, 40
-MAX_BULLETS = 3
+from config import *
+from sprites import *
 
 # User events
 YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
-
-# Import images
-YELLOW_SPACESHIP_IMAGE = pygame.image.load(os.path.join('Assets', 'spaceship_yellow.png'))
-YELLOW_SPACESHIP = pygame.transform.scale(YELLOW_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT))
-YELLOW_SPACESHIP = pygame.transform.rotate(YELLOW_SPACESHIP, 90)
-# Doing it with os.path.join because different OS may use different pathing
-RED_SPACESHIP_IMAGE = pygame.image.load(os.path.join('Assets', 'spaceship_red.png'))
-RED_SPACESHIP = pygame.transform.scale(RED_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT))
-RED_SPACESHIP = pygame.transform.rotate(RED_SPACESHIP, 270)
-# Background
-SPACE = pygame.image.load(os.path.join('Assets', 'space.png'))
-SPACE = pygame.transform.scale(SPACE, (WIDTH, HEIGHT))
-
 
 def draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health):
    
@@ -96,6 +52,7 @@ def red_movement_handle(keys_pressed, red):
         red.y -= VEL    
     if keys_pressed[pygame.K_DOWN] and red.y + VEL + red.height < HEIGHT - 15: # DOWN
         red.y += VEL
+
 '''
 This function will move the bullets, handle bullet collision, 
 and remove bullets when they collide or go off-screen.
